@@ -95,16 +95,28 @@ function genericHandler(redirectTemplate, regex, name, filenameKeys = ["filename
 	return handler;
 }
 
-const MISC_REDIRECT_TEMPLATE = "https://hacked-doc-assets.netlify.app/images/misc/"; // redirect URLs are all from this
-const MISC_SCHEME = "*://*.deeeep.io/assets/*"; // these urls will be redirected like ui sprites
-const MISC_REGEX = /.+\/assets\/(?<filename>.+\.js)(?:\?.*)?$/; // might it be a valid ui sprite?
+var fishy_ffa_urls = [];
 
-const miscHandler = genericHandler(MISC_REDIRECT_TEMPLATE, MISC_REGEX, "misc");
+var getServerList = new XMLHttpRequest();
+getServerList.addEventListener("load", () => {
+	var data = JSON.parse(this.responseText);
+	for (let i = 0; i < data.hosts.length; i++) {
+		if (data.hosts[i].map.string_id == "fishy_ffa") {
+			fishy_ffa_url.push(`https://*.deeeep.io/${data.hosts[i].id}/*`);
+		}
+	}
+});
+getServerList.open("GET", "https://apibeta.deeeep.io/hosts", false);
+getServerList.send();
+
+const FISHY_FFA_REDIRECT_TEMPLATE = "https://deeeepio-custom-maps.netlify.app/fishy_ffa/"; // redirect URLs are all from this
+
+const fishy_ffa_Handler = genericHandler(FISHY_FFA_REDIRECT_TEMPLATE, /.*/, "fishy_ffa");
 
 chrome.webRequest.onBeforeRequest.addListener(
-	miscHandler,
+	fishy_ffa_Handler,
 	{
-		urls: [MISC_SCHEME],
+		urls: fishy_ffa_urls,
 		types: ["script"]
 	},
 	["blocking"]
