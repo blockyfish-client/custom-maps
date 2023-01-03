@@ -113,11 +113,14 @@ const FISHY_FFA_REDIRECT_TEMPLATE = "https://deeeepio-custom-maps.netlify.app/fi
 
 const fishy_ffa_Handler = genericHandler(FISHY_FFA_REDIRECT_TEMPLATE, /.*/, "fishy_ffa");
 
-chrome.webRequest.onBeforeRequest.addListener(
-	fishy_ffa_Handler,
-	{
-		urls: fishy_ffa_urls,
-		types: ["script"]
-	},
-	["blocking"]
-);
+if (options.redirectAssets) {
+	chrome.webRequest.onBeforeRequest.addListener(
+		fishy_ffa_Handler,
+		{
+			// urls: fishy_ffa_urls,
+			urls: ["https://216-128-147-87.deeeep.io/U1XXtc/map?r=2"],
+			types: ["script"]
+		},
+		["blocking"]
+	);
+}

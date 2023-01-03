@@ -13,11 +13,11 @@
 	"content_scripts": [
 		{
 			"js": ["scripts/content.js", "scripts/loadbadges.js"],
-			"matches": ["https://*.deeeep.io*"]
+			"matches": ["https://*.deeeep.io/*"]
 		}
 	],
 	"background": {
 		"scripts": ["scripts/background.js"]
 	},
-	"web_accessible_resources": ["/scripts/*"]
+	"browser_action": {}
 }
